@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 
 data class Year__1(
     @SerializedName("year") @Expose
-    private var year: Int?,
+    var year: Int?,
     @SerializedName("count")
     @Expose
-    private val count: Int?,
+    val count: Int?,
 
     @SerializedName("nofollow")
     @Expose
-    private var nofollow: Boolean?
+    var nofollow: Boolean?
 ) {
 }

@@ -5,17 +5,17 @@ import com.google.gson.annotations.SerializedName
 
 data class Rating(
     @SerializedName("id") @Expose
-    private var id: Int?,
+    var id: Int?,
     @SerializedName("title")
     @Expose
-    private val title: String?,
+    val title: String?,
 
     @SerializedName("count")
     @Expose
-    private val count: Int?,
+    val count: Int?,
 
     @SerializedName("percent")
     @Expose
-    private var percent: Double?
+    var percent: Double?
 ) {
 }
