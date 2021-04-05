@@ -4,41 +4,44 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Result(
-    @SerializedName("id") @Expose
-    private var id: Int?,
+    @SerializedName("id")
+    @Expose
+    var id: Int?,
+
     @SerializedName("slug")
     @Expose
-    private val slug: String?,
+    val slug: String?,
 
     @SerializedName("name")
     @Expose
-    private val name: String?,
+    val name: String?,
 
     @SerializedName("released")
     @Expose
-    private val released: String?,
+    val released: String?,
 
     @SerializedName("tba")
     @Expose
-    private val tba: Boolean?,
+    val tba: Boolean?,
 
     @SerializedName("background_image")
     @Expose
-    private val backgroundImage: String?,
+    val backgroundImage: String?,
 
     @SerializedName("rating")
     @Expose
-    private val rating: Double?,
+    val rating: Double?,
 
     @SerializedName("rating_top")
     @Expose
-    private val ratingTop: Int?,
+    val ratingTop: Int?,
 
     @SerializedName("ratings")
     @Expose
-    private val ratings: List<Rating>?,
+    val ratings: List<Rating>?,
 
     @SerializedName("ratings_count")
     @Expose
-    private var ratingsCount: Int? ) {
+    var ratingsCount: Int?
+) {
 }

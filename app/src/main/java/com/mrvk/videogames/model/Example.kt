@@ -9,54 +9,54 @@ data class Example(
 
     @SerializedName("count")
     @Expose
-    private val count: Int?,
+    val count: Int?,
 
     @SerializedName("next")
     @Expose
-    private val next: String?,
+    val next: String?,
 
     @SerializedName("previous")
     @Expose
-    private val previous: String?,
+    val previous: String?,
 
     @SerializedName("results")
     @Expose
-    private val results: List<Result>?,
+    val results: List<Result>?,
 
     @SerializedName("seo_title")
     @Expose
-    private val seoTitle: String?,
+    val seoTitle: String?,
 
     @SerializedName("seo_description")
     @Expose
-    private val seoDescription: String?,
+    val seoDescription: String?,
 
     @SerializedName("seo_keywords")
     @Expose
-    private val seoKeywords: String?,
+    val seoKeywords: String?,
 
     @SerializedName("seo_h1")
     @Expose
-    private val seoH1: String?,
+    val seoH1: String?,
 
     @SerializedName("noindex")
     @Expose
-    private val noindex: Boolean?,
+    val noindex: Boolean?,
 
     @SerializedName("nofollow")
     @Expose
-    private val nofollow: Boolean?,
+    val nofollow: Boolean?,
 
     @SerializedName("description")
     @Expose
-    private val description: String?,
+    val description: String?,
 
     @SerializedName("filters")
     @Expose
-    private val filters: Filters?,
+    val filters: Filters?,
 
     @SerializedName("nofollow_collections")
     @Expose
-    private var nofollowCollections: MutableList<String?>?
+    var nofollowCollections: MutableList<String?>?
 ) {
 }

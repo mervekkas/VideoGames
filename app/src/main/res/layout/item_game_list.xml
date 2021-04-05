@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_regtangle_line_radius"
+        android:layout_margin="6dp"
+        android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tv_game_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="200dp"
+                style="@style/TextBold"
+                android:text="Game Name"
+                android:lines="2"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toEndOf="@+id/img_game_item"
+                app:layout_constraintTop_toTopOf="@+id/img_game_item"/>
+
+            <TextView
+                android:id="@+id/tv_game_item_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextRegular"
+                android:text="Rating"
+                android:layout_marginBottom="6dp"
+                app:layout_constraintStart_toStartOf="@+id/tv_game_item_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_game_item_name"/>
+
+            <TextView
+                android:id="@+id/tv_game_item_released"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextLight"
+                android:text=" - Released"
+                app:layout_constraintStart_toEndOf="@+id/tv_game_item_rating"
+                app:layout_constraintTop_toTopOf="@+id/tv_game_item_rating"/>
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/img_game_item"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/abc_vector_test"
+            app:civ_border_color="@color/colorBlack"
+            app:civ_border_width="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/img_list_to_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_iconfinder_double_arrow_right_1954526"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
