@@ -4,10 +4,8 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Result(
-    @SerializedName("id")
-    @Expose
+    @SerializedName("id") @Expose
     var id: Int?,
-
     @SerializedName("slug")
     @Expose
     val slug: String?,
@@ -42,6 +40,6 @@ data class Result(
 
     @SerializedName("ratings_count")
     @Expose
-    var ratingsCount: Int?
+    val ratingsCount: Int?
 ) {
 }

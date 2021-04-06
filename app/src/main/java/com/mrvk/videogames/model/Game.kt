@@ -3,10 +3,9 @@ package com.mrvk.videogames.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class Example(
+data class Game(
     @SerializedName("WARNING") @Expose
     var warning: String?,
-
     @SerializedName("count")
     @Expose
     val count: Int?,
@@ -57,6 +56,6 @@ data class Example(
 
     @SerializedName("nofollow_collections")
     @Expose
-    var nofollowCollections: MutableList<String?>?
+    val nofollowCollections: List<String>?
 ) {
 }
