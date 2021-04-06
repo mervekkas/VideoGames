@@ -23,7 +23,7 @@ class GameRecyclerAdapter(val gameList : ArrayList<Result>) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
         holder.itemView.tv_game_item_name.text = gameList.get(position).name
         holder.itemView.tv_game_item_rating.text = gameList.get(position).rating.toString()
-        holder.itemView.tv_game_item_released.text = gameList.get(position).released
+        holder.itemView.tv_game_item_released.text = " - " +gameList.get(position).released
     }
     fun gameListRefresh(newGameList : List<Result>){
         gameList.clear()

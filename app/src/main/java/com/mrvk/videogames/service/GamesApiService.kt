@@ -1,6 +1,6 @@
 package com.mrvk.videogames.service
 
-import com.mrvk.videogames.model.Result
+import com.mrvk.videogames.model.Game
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -18,7 +18,7 @@ class GamesApiService {
         .build()
         .create(GameApiInterface::class.java)
 
-    fun getData() : Single<List<Result>> {
+    fun getData() : Single<Game> {
         return api.getGames()
     }
 }

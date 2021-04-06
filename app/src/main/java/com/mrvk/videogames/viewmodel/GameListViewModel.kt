@@ -2,6 +2,7 @@ package com.mrvk.videogames.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.mrvk.videogames.model.Game
 import com.mrvk.videogames.model.Result
 import com.mrvk.videogames.service.GamesApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -28,9 +29,9 @@ class GameListViewModel : ViewModel() {
             gamesApiService.getData()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<List<Result>>() {
-                    override fun onSuccess(t: List<Result>) {
-                        gameList.value = t
+                .subscribeWith(object : DisposableSingleObserver<Game>() {
+                    override fun onSuccess(t: Game) {
+                        gameList.value = t.results
                         gameErroMessage.value = false
                         loading.value = false
                     }
