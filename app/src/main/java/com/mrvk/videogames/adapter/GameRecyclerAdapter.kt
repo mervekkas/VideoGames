@@ -10,7 +10,8 @@ import com.mrvk.videogames.util.downloadImage
 import com.mrvk.videogames.util.placeHolderCreated
 import kotlinx.android.synthetic.main.item_game_list.view.*
 
-class GameRecyclerAdapter(val gameList : ArrayList<Result>) : RecyclerView.Adapter<GameRecyclerAdapter.GameViewHolder>() {
+class GameRecyclerAdapter(val gameList : ArrayList<Result>, val listener : GameAdapterListener) :
+    RecyclerView.Adapter<GameRecyclerAdapter.GameViewHolder>() {
     class GameViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
     }
@@ -23,14 +24,27 @@ class GameRecyclerAdapter(val gameList : ArrayList<Result>) : RecyclerView.Adapt
         return gameList.size
     }
     override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
+        clickItem(holder.itemView,gameList,position)
         holder.itemView.tv_game_item_name.text = gameList.get(position).name
         holder.itemView.tv_game_item_rating.text = gameList.get(position).rating.toString()
         holder.itemView.tv_game_item_released.text = " - " +gameList.get(position).released
         holder.itemView.img_game_item.downloadImage(gameList.get(position).backgroundImage, placeHolderCreated(holder.itemView.context))
     }
+
+    private fun clickItem(itemView: View, gameList: List<Result>, position: Int) {
+        itemView.setOnClickListener {
+            gameList.get(position).id?.let { it1 ->
+                listener.onClicked(it1) }
+        }
+    }
+
     fun gameListRefresh(newGameList : List<Result>){
         gameList.clear()
         gameList.addAll(newGameList)
         notifyDataSetChanged()
+    }
+
+    interface GameAdapterListener {
+        fun onClicked(id : Int)
     }
 }

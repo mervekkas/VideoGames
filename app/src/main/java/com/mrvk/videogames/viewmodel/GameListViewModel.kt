@@ -1,6 +1,5 @@
 package com.mrvk.videogames.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mrvk.videogames.model.Game
@@ -12,7 +11,6 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
 class GameListViewModel : ViewModel() {
-
     val gameList = MutableLiveData<List<Result>>()
     val gameErroMessage = MutableLiveData<Boolean>()
     val loading = MutableLiveData<Boolean>()
@@ -27,7 +25,7 @@ class GameListViewModel : ViewModel() {
     private fun dataResponse() {
         loading.value = true
         disposable.add(
-            gamesApiService.getData()
+            gamesApiService.getGames()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<Game>() {
