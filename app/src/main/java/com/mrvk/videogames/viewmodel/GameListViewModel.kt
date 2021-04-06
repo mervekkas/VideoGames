@@ -1,5 +1,6 @@
 package com.mrvk.videogames.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mrvk.videogames.model.Game
@@ -31,18 +32,27 @@ class GameListViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<Game>() {
                     override fun onSuccess(t: Game) {
-                        gameList.value = t.results
-                        gameErroMessage.value = false
-                        loading.value = false
+                        t.results?.let {
+                            onSuccesValue(it) }
                     }
 
                     override fun onError(e: Throwable) {
-                        gameErroMessage.value = true
-                        loading.value = false
-                        e.printStackTrace()
+                        onErrorValue(e)
                     }
 
                 }))
 
+    }
+    private fun onErrorValue(e: Throwable) {
+        gameErroMessage.value = true
+        loading.value = false
+        gameList.value = mutableListOf()
+        e.printStackTrace()
+    }
+
+    private fun onSuccesValue(gameL: List<Result>) {
+        gameList.value = gameL
+        gameErroMessage.value = false
+        loading.value = false
     }
 }
