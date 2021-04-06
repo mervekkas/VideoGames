@@ -9,45 +9,47 @@
         android:layout_margin="6dp"
         android:padding="8dp">
 
-            <TextView
-                android:id="@+id/tv_game_item_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="200dp"
-                style="@style/TextBold"
-                android:lines="2"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintStart_toEndOf="@+id/img_game_item"
-                app:layout_constraintTop_toTopOf="@+id/img_game_item"/>
+        <TextView
+            android:id="@+id/tv_game_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="180dp"
+            style="@style/TextBold"
+            android:text="name"
+            android:lines="2"
+            android:gravity="center_vertical"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toEndOf="@+id/img_game_item"
+            app:layout_constraintTop_toTopOf="@+id/img_game_item" />
 
-            <TextView
-                android:id="@+id/tv_game_item_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextRegular"
-                android:layout_marginBottom="6dp"
-                app:layout_constraintStart_toStartOf="@+id/tv_game_item_name"
-                app:layout_constraintTop_toBottomOf="@+id/tv_game_item_name"/>
+        <TextView
+            android:id="@+id/tv_game_item_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextRegular"
+            android:text="rating"
+            android:layout_marginBottom="6dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_game_item_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_game_item_name" />
 
-            <TextView
-                android:id="@+id/tv_game_item_released"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextLight"
-                app:layout_constraintStart_toEndOf="@+id/tv_game_item_rating"
-                app:layout_constraintTop_toTopOf="@+id/tv_game_item_rating"/>
+        <TextView
+            android:id="@+id/tv_game_item_released"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextLight"
+            android:text=" - released"
+            app:layout_constraintStart_toEndOf="@+id/tv_game_item_rating"
+            app:layout_constraintTop_toTopOf="@+id/tv_game_item_rating" />
 
-        <com.mikhaellopez.circularimageview.CircularImageView
+        <ImageView
             android:id="@+id/img_game_item"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="140dp"
+            android:layout_height="100dp"
             android:src="@drawable/abc_vector_test"
-            app:civ_border_color="@color/colorBlack"
-            app:civ_border_width="2dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <ImageView
             android:id="@+id/img_list_to_detail"

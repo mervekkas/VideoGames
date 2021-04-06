@@ -1,7 +1,6 @@
 package com.mrvk.videogames.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,16 +13,15 @@ import com.mrvk.videogames.adapter.GameRecyclerAdapter
 import com.mrvk.videogames.viewmodel.GameListViewModel
 import kotlinx.android.synthetic.main.fragment_game_list.*
 
-class GameListFragment : Fragment() {
+class GameListFragment : Fragment(), GameRecyclerAdapter.GameAdapterListener {
 
     private lateinit var viewModel: GameListViewModel
-    private val recyclerGameAdapter = GameRecyclerAdapter(arrayListOf())
+    private val recyclerGameAdapter = GameRecyclerAdapter(arrayListOf(), this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_game_list, container, false)
     }
 
@@ -36,8 +34,20 @@ class GameListFragment : Fragment() {
         rv_game_list.layoutManager = LinearLayoutManager(context)
         rv_game_list.adapter = recyclerGameAdapter
 
+        setListener()
         observeLiveData()
     }
+
+    fun setListener() {
+        swipeRefreshLayout.setOnRefreshListener {
+            progress_game_list.visibility = View.VISIBLE
+            tv_game_list_error_message.visibility = View.GONE
+            rv_game_list.visibility = View.GONE
+            viewModel.refreshListData()
+            swipeRefreshLayout.isRefreshing = false
+        }
+    }
+
     fun observeLiveData() {
 
         viewModel.gameList.observe(viewLifecycleOwner, Observer {
@@ -77,5 +87,11 @@ class GameListFragment : Fragment() {
         rv_game_list.visibility = View.VISIBLE
         progress_game_list.visibility = View.GONE
         tv_game_list_error_message.visibility = View.GONE
+    }
+
+    override fun onClicked(id: Int) {
+        val fragment = GameDetailFragment.newInstance(id)
+        fragmentManager?.beginTransaction()?.replace(R.id.container_main, fragment)
+            ?.addToBackStack("Tag")?.commit()
     }
 }
