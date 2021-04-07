@@ -39,6 +39,9 @@ class GameListViewModel : ViewModel() {
                     }
 
                 }))
+    }
+
+    fun searchDataResponse(query : String) {
 
     }
     private fun onErrorValue(e: Throwable) {

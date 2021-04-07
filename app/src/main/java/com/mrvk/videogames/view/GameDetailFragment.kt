@@ -16,10 +16,12 @@ import com.mrvk.videogames.viewmodel.GameDetailViewModel
 import com.mrvk.videogames.viewmodel.GameListViewModel
 import kotlinx.android.synthetic.main.fragment_game_detail.*
 import kotlinx.android.synthetic.main.fragment_game_list.*
+import kotlinx.android.synthetic.main.tool_bar_layout.*
 
 class GameDetailFragment : Fragment() {
     private var gameDetailId = -1
     private lateinit var viewModelDetail : GameDetailViewModel
+    private lateinit var gameName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +45,13 @@ class GameDetailFragment : Fragment() {
         viewModelDetail.refreshDetailData(gameDetailId)
         observeLiveData()
     }
-
+    private fun setToolBar() {
+        tool_bar_title.text = gameName
+        tool_bar_search_view.visibility = View.GONE
+        line_tool_bar.visibility = View.GONE
+        img_tool_bar_back.visibility = View.VISIBLE
+        backClick()
+    }
     fun observeLiveData() {
         viewModelDetail.gameDetail.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -66,6 +74,9 @@ class GameDetailFragment : Fragment() {
     }
 
     private fun detailVisible(it: GameDetail) {
+        gameName = it.name.toString()
+        line.visibility = View.VISIBLE
+        line_second.visibility = View.VISIBLE
         tv_detail_game_name.text = it.name
         tv_detail_game_release.text = it.released
         tv_detail_game_metacritic.text = "Metacritic : " + it.metacritic.toString()
@@ -77,6 +88,7 @@ class GameDetailFragment : Fragment() {
         }
         progress_game_detail.visibility = View.GONE
         tv_game_detail_error_message.visibility = View.GONE
+        setToolBar()
     }
 
     private fun errorVisible() {
@@ -96,6 +108,11 @@ class GameDetailFragment : Fragment() {
             bundle.putInt(GAME_ID, gameId)
             fragment.arguments = bundle
             return fragment
+        }
+    }
+    private fun backClick() {
+        img_tool_bar_back.setOnClickListener {
+            requireActivity().onBackPressed()
         }
     }
 }

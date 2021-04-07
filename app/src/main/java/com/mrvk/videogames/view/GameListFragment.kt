@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import com.mrvk.videogames.R
 import com.mrvk.videogames.adapter.GameRecyclerAdapter
 import com.mrvk.videogames.viewmodel.GameListViewModel
 import kotlinx.android.synthetic.main.fragment_game_list.*
+import kotlinx.android.synthetic.main.tool_bar_layout.*
 
 class GameListFragment : Fragment(), GameRecyclerAdapter.GameAdapterListener {
 
@@ -31,11 +33,31 @@ class GameListFragment : Fragment(), GameRecyclerAdapter.GameAdapterListener {
         viewModel = ViewModelProviders.of(this).get(GameListViewModel::class.java)
         viewModel.refreshListData()
 
+        setToolBar()
         rv_game_list.layoutManager = LinearLayoutManager(context)
         rv_game_list.adapter = recyclerGameAdapter
 
         setListener()
         observeLiveData()
+    }
+    private fun setToolBar() {
+        tool_bar_title.setText(R.string.list_title)
+        img_tool_bar_back.visibility = View.GONE
+        tool_bar_search_view.visibility = View.VISIBLE
+        //getQueryTextListener()
+    }
+
+    private fun getQueryTextListener() {
+        tool_bar_search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     fun setListener() {

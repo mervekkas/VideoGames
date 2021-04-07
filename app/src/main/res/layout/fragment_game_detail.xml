@@ -13,14 +13,20 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <include
+                android:id="@+id/tool_bar_list"
+                layout="@layout/tool_bar_layout"
+                app:layout_constraintTop_toTopOf="parent"/>
+
             <ImageView
                 android:id="@+id/img_game_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="200dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/tool_bar_list" />
 
             <View
                 android:id="@+id/line"
@@ -30,13 +36,13 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img_game_detail"/>
+                app:layout_constraintTop_toBottomOf="@+id/img_game_detail"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_detail_game_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Game Name"
                 android:lines="2"
                 style="@style/TextMedium"
                 android:textSize="28dp"
@@ -55,13 +61,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_detail_game_name"
-                app:layout_constraintBottom_toTopOf="@+id/tv_detail_game_release"/>
+                app:layout_constraintBottom_toTopOf="@+id/tv_detail_game_release"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_detail_game_release"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="akdbaksbdfksbfkabs"
                 style="@style/TextBold"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="16dp"
@@ -72,7 +78,6 @@
                 android:id="@+id/tv_detail_game_metacritic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="akdbaksbdfksbfkabs"
                 style="@style/TextBold"
                 app:layout_constraintStart_toStartOf="@id/tv_detail_game_release"
                 app:layout_constraintTop_toBottomOf="@+id/tv_detail_game_release"/>
@@ -83,7 +88,6 @@
                 android:layout_height="wrap_content"
                 style="@style/TextRegular"
                 android:gravity="start"
-                android:text="akdbaksbdfksbfkabsfcbdskncncflknasdklfnakslsdsdcscsnflksnfckaslkcfnaskncfaksncfkasnkcnaskncaksnckalnsckasncasçcfkmasçkfnaskçnfkasnkfasnkfnaskfnasknfkasf"
                 android:paddingHorizontal="20dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
