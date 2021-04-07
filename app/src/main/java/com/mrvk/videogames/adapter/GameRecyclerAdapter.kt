@@ -3,15 +3,19 @@ package com.mrvk.videogames.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.mrvk.videogames.R
 import com.mrvk.videogames.model.Result
 import com.mrvk.videogames.util.downloadImage
 import com.mrvk.videogames.util.placeHolderCreated
+import com.mrvk.videogames.util.CustomFilter
 import kotlinx.android.synthetic.main.item_game_list.view.*
 
-class GameRecyclerAdapter(val gameList : ArrayList<Result>, val listener : GameAdapterListener) :
-    RecyclerView.Adapter<GameRecyclerAdapter.GameViewHolder>() {
+class GameRecyclerAdapter(var gameList : ArrayList<Result>, val listener : GameAdapterListener) :
+    RecyclerView.Adapter<GameRecyclerAdapter.GameViewHolder>(), Filterable {
+    var filter: CustomFilter? = null
     class GameViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
     }
@@ -39,12 +43,21 @@ class GameRecyclerAdapter(val gameList : ArrayList<Result>, val listener : GameA
     }
 
     fun gameListRefresh(newGameList : List<Result>){
-        gameList.clear()
         gameList.addAll(newGameList)
         notifyDataSetChanged()
     }
 
     interface GameAdapterListener {
         fun onClicked(id : Int)
+    }
+
+    override fun getFilter(): Filter {
+        if (filter == null) {
+            filter = CustomFilter(
+                gameList as ArrayList<Result>,
+                this
+            )
+        }
+        return filter as CustomFilter
     }
 }

@@ -2,7 +2,6 @@ package com.mrvk.videogames.util
 
 import android.content.Context
 import android.widget.ImageView
-import androidx.constraintlayout.widget.Placeholder
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions

@@ -14,36 +14,36 @@ class GameListViewModel : ViewModel() {
     val gameList = MutableLiveData<List<Result>>()
     val gameErroMessage = MutableLiveData<Boolean>()
     val loading = MutableLiveData<Boolean>()
+    var pageCount = 1
 
-    private val gamesApiService =GamesApiService()
+    private val gamesApiService = GamesApiService()
     private val disposable = CompositeDisposable()
 
     fun refreshListData() {
-       dataResponse()
+        dataResponse()
     }
 
-    private fun dataResponse() {
+    private fun dataResponse(pageNo: Int?= 1) {
         loading.value = true
         disposable.add(
-            gamesApiService.getGames()
+            gamesApiService.getGames(pageNo ?: 1)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<Game>() {
                     override fun onSuccess(t: Game) {
                         t.results?.let {
-                            onSuccesValue(it) }
+                            onSuccesValue(it)
+                        }
                     }
 
                     override fun onError(e: Throwable) {
                         onErrorValue(e)
                     }
 
-                }))
+                })
+        )
     }
 
-    fun searchDataResponse(query : String) {
-
-    }
     private fun onErrorValue(e: Throwable) {
         gameErroMessage.value = true
         loading.value = false
@@ -55,5 +55,9 @@ class GameListViewModel : ViewModel() {
         gameList.value = gameL
         gameErroMessage.value = false
         loading.value = false
+    }
+
+    fun getMoreData() {
+        dataResponse(pageCount++)
     }
 }

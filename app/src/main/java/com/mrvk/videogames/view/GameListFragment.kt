@@ -9,6 +9,7 @@ import android.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.mrvk.videogames.R
 import com.mrvk.videogames.adapter.GameRecyclerAdapter
 import com.mrvk.videogames.viewmodel.GameListViewModel
@@ -44,30 +45,32 @@ class GameListFragment : Fragment(), GameRecyclerAdapter.GameAdapterListener {
         tool_bar_title.setText(R.string.list_title)
         img_tool_bar_back.visibility = View.GONE
         tool_bar_search_view.visibility = View.VISIBLE
-        //getQueryTextListener()
+        getQueryTextListener()
     }
 
     private fun getQueryTextListener() {
+        tool_bar_search_view.setQueryHint("Enter News Name")
         tool_bar_search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                TODO("Not yet implemented")
+                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                TODO("Not yet implemented")
+                recyclerGameAdapter.getFilter().filter(newText)
+                return false
             }
 
         })
     }
 
     fun setListener() {
-        swipeRefreshLayout.setOnRefreshListener {
-            progress_game_list.visibility = View.VISIBLE
-            tv_game_list_error_message.visibility = View.GONE
-            rv_game_list.visibility = View.GONE
-            viewModel.refreshListData()
-            swipeRefreshLayout.isRefreshing = false
-        }
+        rv_game_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if(isLastItemDisplaying(recyclerView)){
+                    viewModel.getMoreData()
+                }
+            }
+        })
     }
 
     fun observeLiveData() {
@@ -115,5 +118,17 @@ class GameListFragment : Fragment(), GameRecyclerAdapter.GameAdapterListener {
         val fragment = GameDetailFragment.newInstance(id)
         fragmentManager?.beginTransaction()?.replace(R.id.container_main, fragment)
             ?.addToBackStack("Tag")?.commit()
+    }
+
+    private fun isLastItemDisplaying(recyclerView: RecyclerView):Boolean {
+        if(recyclerView.getAdapter()?.getItemCount() != 0){
+            var lastVisibleItemPosition: Int = (recyclerView?.getLayoutManager() as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
+
+            if(lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition == recyclerView.getAdapter()?.getItemCount()
+                    ?.minus(1) ?: -1)
+                return true;
+        }
+
+        return false;
     }
 }
