@@ -21,8 +21,8 @@ class GamesApiService {
         .build()
         .create(GameApiInterface::class.java)
 
-    fun getGames() : Single<Game> {
-        return api.getGames()
+    fun getGames(pageNo: Int) : Single<Game> {
+        return api.getGames(pageNo)
     }
 
     fun getDetail(gameId : Int) : Single<GameDetail> {

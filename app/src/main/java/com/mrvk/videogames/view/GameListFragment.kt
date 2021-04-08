@@ -5,13 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.mrvk.videogames.R
 import com.mrvk.videogames.adapter.GameRecyclerAdapter
 import com.mrvk.videogames.viewmodel.GameListViewModel
 import kotlinx.android.synthetic.main.fragment_game_list.*
+import kotlinx.android.synthetic.main.tool_bar_layout.*
 
 class GameListFragment : Fragment(), GameRecyclerAdapter.GameAdapterListener {
 
@@ -31,21 +34,43 @@ class GameListFragment : Fragment(), GameRecyclerAdapter.GameAdapterListener {
         viewModel = ViewModelProviders.of(this).get(GameListViewModel::class.java)
         viewModel.refreshListData()
 
+        setToolBar()
         rv_game_list.layoutManager = LinearLayoutManager(context)
         rv_game_list.adapter = recyclerGameAdapter
 
         setListener()
         observeLiveData()
     }
+    private fun setToolBar() {
+        tool_bar_title.setText(R.string.list_title)
+        img_tool_bar_back.visibility = View.GONE
+        tool_bar_search_view.visibility = View.VISIBLE
+        getQueryTextListener()
+    }
+
+    private fun getQueryTextListener() {
+        tool_bar_search_view.setQueryHint("Enter News Name")
+        tool_bar_search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                recyclerGameAdapter.getFilter().filter(newText)
+                return false
+            }
+
+        })
+    }
 
     fun setListener() {
-        swipeRefreshLayout.setOnRefreshListener {
-            progress_game_list.visibility = View.VISIBLE
-            tv_game_list_error_message.visibility = View.GONE
-            rv_game_list.visibility = View.GONE
-            viewModel.refreshListData()
-            swipeRefreshLayout.isRefreshing = false
-        }
+        rv_game_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if(isLastItemDisplaying(recyclerView)){
+                    viewModel.getMoreData()
+                }
+            }
+        })
     }
 
     fun observeLiveData() {
@@ -93,5 +118,17 @@ class GameListFragment : Fragment(), GameRecyclerAdapter.GameAdapterListener {
         val fragment = GameDetailFragment.newInstance(id)
         fragmentManager?.beginTransaction()?.replace(R.id.container_main, fragment)
             ?.addToBackStack("Tag")?.commit()
+    }
+
+    private fun isLastItemDisplaying(recyclerView: RecyclerView):Boolean {
+        if(recyclerView.getAdapter()?.getItemCount() != 0){
+            var lastVisibleItemPosition: Int = (recyclerView?.getLayoutManager() as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
+
+            if(lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition == recyclerView.getAdapter()?.getItemCount()
+                    ?.minus(1) ?: -1)
+                return true;
+        }
+
+        return false;
     }
 }
