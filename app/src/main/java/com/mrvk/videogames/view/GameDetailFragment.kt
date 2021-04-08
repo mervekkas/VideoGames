@@ -23,15 +23,10 @@ class GameDetailFragment : Fragment() {
     private lateinit var viewModelDetail : GameDetailViewModel
     private lateinit var gameName: String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_game_detail, container, false)
     }
 
@@ -40,7 +35,7 @@ class GameDetailFragment : Fragment() {
 
         viewModelDetail = ViewModelProviders.of(this).get(GameDetailViewModel::class.java)
         arguments?.let {
-            gameDetailId = it.getInt(GAME_ID)
+            gameDetailId = GameDetailFragmentArgs.fromBundle(it).id
         }
         viewModelDetail.refreshDetailData(gameDetailId)
         observeLiveData()
@@ -100,16 +95,6 @@ class GameDetailFragment : Fragment() {
         progress_game_detail.visibility = View.VISIBLE
     }
 
-    companion object{
-        private val GAME_ID = "GAME_ID"
-        fun newInstance(gameId:Int) : GameDetailFragment {
-            val fragment = GameDetailFragment()
-            val bundle = Bundle()
-            bundle.putInt(GAME_ID, gameId)
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
     private fun backClick() {
         img_tool_bar_back.setOnClickListener {
             requireActivity().onBackPressed()

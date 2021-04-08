@@ -5,15 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.mrvk.videogames.R
 import com.mrvk.videogames.model.Result
 import com.mrvk.videogames.util.downloadImage
 import com.mrvk.videogames.util.placeHolderCreated
 import com.mrvk.videogames.util.CustomFilter
+import com.mrvk.videogames.view.GameListFragmentDirections
 import kotlinx.android.synthetic.main.item_game_list.view.*
 
-class GameRecyclerAdapter(var gameList : ArrayList<Result>, val listener : GameAdapterListener) :
+class GameRecyclerAdapter(var gameList : ArrayList<Result>) :
     RecyclerView.Adapter<GameRecyclerAdapter.GameViewHolder>(), Filterable {
     var filter: CustomFilter? = null
     var tempGameList: ArrayList<Result> = arrayListOf()
@@ -29,27 +31,23 @@ class GameRecyclerAdapter(var gameList : ArrayList<Result>, val listener : GameA
         return gameList.size
     }
     override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
-        clickItem(holder.itemView,gameList,position)
+        gameList.get(position).id?.let { clickItem(holder.itemView, it) }
         holder.itemView.tv_game_item_name.text = gameList.get(position).name
         holder.itemView.tv_game_item_rating.text = gameList.get(position).rating.toString()
         holder.itemView.tv_game_item_released.text = " - " +gameList.get(position).released
         holder.itemView.img_game_item.downloadImage(gameList.get(position).backgroundImage, placeHolderCreated(holder.itemView.context))
     }
 
-    private fun clickItem(itemView: View, gameList: List<Result>, position: Int) {
+    private fun clickItem(itemView: View, id: Int) {
         itemView.setOnClickListener {
-            gameList.get(position).id?.let { it1 ->
-                listener.onClicked(it1) }
+            val action = GameListFragmentDirections.actionGameListFragmentToGameDetailFragment(id)
+            Navigation.findNavController(it).navigate(action)
         }
     }
 
     fun gameListRefresh(newGameList : List<Result>){
         gameList.addAll(newGameList)
         notifyDataSetChanged()
-    }
-
-    interface GameAdapterListener {
-        fun onClicked(id : Int)
     }
 
     override fun getFilter(): Filter {
