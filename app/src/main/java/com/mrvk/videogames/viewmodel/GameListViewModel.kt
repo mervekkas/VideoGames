@@ -2,6 +2,7 @@ package com.mrvk.videogames.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.mrvk.videogames.adapter.GameRecyclerAdapter
 import com.mrvk.videogames.model.Game
 import com.mrvk.videogames.model.Result
 import com.mrvk.videogames.service.GamesApiService

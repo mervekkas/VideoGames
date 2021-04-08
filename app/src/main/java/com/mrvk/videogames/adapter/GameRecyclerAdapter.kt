@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.item_game_list.view.*
 class GameRecyclerAdapter(var gameList : ArrayList<Result>, val listener : GameAdapterListener) :
     RecyclerView.Adapter<GameRecyclerAdapter.GameViewHolder>(), Filterable {
     var filter: CustomFilter? = null
+    var tempGameList: ArrayList<Result> = arrayListOf()
     class GameViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
     }
