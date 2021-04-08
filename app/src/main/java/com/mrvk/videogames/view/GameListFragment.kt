@@ -16,10 +16,10 @@ import com.mrvk.videogames.viewmodel.GameListViewModel
 import kotlinx.android.synthetic.main.fragment_game_list.*
 import kotlinx.android.synthetic.main.tool_bar_layout.*
 
-class GameListFragment : Fragment(), GameRecyclerAdapter.GameAdapterListener {
+class GameListFragment : Fragment() {
 
     private lateinit var viewModel: GameListViewModel
-    private val recyclerGameAdapter = GameRecyclerAdapter(arrayListOf(), this)
+    private val recyclerGameAdapter = GameRecyclerAdapter(arrayListOf())
     private var isSearch = false
 
     override fun onCreateView(
@@ -128,21 +128,15 @@ class GameListFragment : Fragment(), GameRecyclerAdapter.GameAdapterListener {
         tv_game_list_error_message.visibility = View.GONE
     }
 
-    override fun onClicked(id: Int) {
-        val fragment = GameDetailFragment.newInstance(id)
-        fragmentManager?.beginTransaction()?.replace(R.id.container_main, fragment)
-            ?.addToBackStack("Tag")?.commit()
-    }
-
     private fun isLastItemDisplaying(recyclerView: RecyclerView):Boolean {
         if(recyclerView.getAdapter()?.getItemCount() != 0){
             var lastVisibleItemPosition: Int = (recyclerView?.getLayoutManager() as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
 
             if(lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition == recyclerView.getAdapter()?.getItemCount()
                     ?.minus(1) ?: -1)
-                return true;
+                return true
         }
 
-        return false;
+        return false
     }
 }

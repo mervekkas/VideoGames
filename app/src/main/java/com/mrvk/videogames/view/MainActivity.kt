@@ -9,12 +9,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        fragmentTransaction()
     }
-    private fun fragmentTransaction() {
-        val manager = supportFragmentManager
-        val transaction = manager.beginTransaction()
-        transaction.add(R.id.container_main, GameListFragment())
-        transaction.commit()
-    }
+
 }
