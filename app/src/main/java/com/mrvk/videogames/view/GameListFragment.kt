@@ -20,6 +20,7 @@ class GameListFragment : Fragment(), GameRecyclerAdapter.GameAdapterListener {
 
     private lateinit var viewModel: GameListViewModel
     private val recyclerGameAdapter = GameRecyclerAdapter(arrayListOf(), this)
+    private var isSearch = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +57,12 @@ class GameListFragment : Fragment(), GameRecyclerAdapter.GameAdapterListener {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                recyclerGameAdapter.getFilter().filter(newText)
+                if(newText != null && newText.length > 2){
+                    recyclerGameAdapter.getFilter().filter(newText)
+                    isSearch = true
+                }else{
+                    isSearch = false
+                }
                 return false
             }
 
@@ -64,13 +70,21 @@ class GameListFragment : Fragment(), GameRecyclerAdapter.GameAdapterListener {
     }
 
     fun setListener() {
+        swipeRefreshLayout.setOnRefreshListener {
+            progress_game_list.visibility = View.VISIBLE
+            tv_game_list_error_message.visibility = View.GONE
+            rv_game_list.visibility = View.GONE
+            viewModel.refreshListData()
+            swipeRefreshLayout.isRefreshing = false
+        }
         rv_game_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if(isLastItemDisplaying(recyclerView)){
+                if(isLastItemDisplaying(recyclerView) && isSearch.not()){
                     viewModel.getMoreData()
                 }
             }
         })
+
     }
 
     fun observeLiveData() {

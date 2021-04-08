@@ -31,6 +31,7 @@ class CustomFilter(
     }
 
     override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+        adapter.tempGameList = adapter.gameList
         adapter.gameList = results?.values as ArrayList<Result>
         adapter.notifyDataSetChanged()
     }
